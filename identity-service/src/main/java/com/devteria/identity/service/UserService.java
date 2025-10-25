@@ -3,8 +3,6 @@ package com.devteria.identity.service;
 import java.util.HashSet;
 import java.util.List;
 
-import com.devteria.identity.mapper.ProfileMapper;
-import com.devteria.identity.repository.httpclient.ProfileClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,17 +16,16 @@ import com.devteria.identity.entity.Role;
 import com.devteria.identity.entity.User;
 import com.devteria.identity.exception.AppException;
 import com.devteria.identity.exception.ErrorCode;
+import com.devteria.identity.mapper.ProfileMapper;
 import com.devteria.identity.mapper.UserMapper;
 import com.devteria.identity.repository.RoleRepository;
 import com.devteria.identity.repository.UserRepository;
+import com.devteria.identity.repository.httpclient.ProfileClient;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.mvc.condition.RequestConditionHolder;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +55,7 @@ public class UserService {
         var profileRequest = profileMapper.toProfileCreationRequest(request);
         profileRequest.setUserId(user.getId());
 
-        profileClient.createProfile( profileRequest);
+        profileClient.createProfile(profileRequest);
 
         return userMapper.toUserResponse(user);
     }
